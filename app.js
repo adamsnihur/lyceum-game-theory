@@ -99,57 +99,46 @@ function initHeroCanvas() {
     height = canvas.height = 280;
   });
 
-  // Particle swarm on 2D simplex / phase plane
   const numParticles = 65;
   const particles = [];
-  let mode = "hawk-dove"; // 'hawk-dove', 'matching-pennies', 'prisoners'
+  let isRunning = true;
+  let animId = null;
 
-  for (let i = 0; i < numParticles; i++) {
-    particles.push({
-      x: Math.random() * (width - 60) + 30,
-      y: Math.random() * (height - 60) + 30,
-      vx: (Math.random() - 0.5) * 1.5,
-      vy: (Math.random() - 0.5) * 1.5,
-      radius: Math.random() * 2.5 + 1.5,
-      color: i % 2 === 0 ? "#3b82f6" : "#10b981",
-      history: []
-    });
+  function resetSwarm() {
+    particles.length = 0;
+    for (let i = 0; i < numParticles; i++) {
+      particles.push({
+        x: Math.random() * (width - 60) + 30,
+        y: Math.random() * (height - 60) + 30,
+        vx: (Math.random() - 0.5) * 1.5,
+        vy: (Math.random() - 0.5) * 1.5,
+        radius: Math.random() * 2.5 + 1.5,
+        color: i % 2 === 0 ? "#3b82f6" : "#10b981",
+        history: []
+      });
+    }
+    const countEl = document.getElementById("heroTrajCount");
+    if (countEl) countEl.innerText = `${particles.length} cząstek`;
   }
 
+  resetSwarm();
+
   function getField(x, y) {
-    // Normalized coordinates [0, 1]
     const nx = (x - 40) / (width - 80);
     const ny = (y - 40) / (height - 80);
-    let dx = 0;
-    let dy = 0;
-
-    if (mode === "hawk-dove") {
-      // Internal attractor (ESS / mixed equilibrium) at (0.6, 0.4)
-      const eqX = 0.55;
-      const eqY = 0.45;
-      const rx = nx - eqX;
-      const ry = ny - eqY;
-      dx = -ry * 1.8 - rx * 0.8;
-      dy = rx * 1.8 - ry * 0.8;
-    } else if (mode === "matching-pennies") {
-      // Limit cycle around center (0.5, 0.5)
-      const rx = nx - 0.5;
-      const ry = ny - 0.5;
-      dx = -ry * 2.2;
-      dy = rx * 2.2;
-    } else {
-      // Prisoner's dilemma: dominant convergence to bottom-right (Defect, Defect)
-      dx = (1.0 - nx) * 1.2;
-      dy = (1.0 - ny) * 1.2;
-    }
+    const rx = nx - 0.5;
+    const ry = ny - 0.5;
+    // Conservative limit cycle around center (0.5, 0.5) with slight orbital damping
+    const dx = -ry * 2.2 - rx * 0.04;
+    const dy = rx * 2.2 - ry * 0.04;
     return { dx, dy };
   }
 
-  function render() {
+  function renderFrame() {
     ctx.fillStyle = "rgba(9, 13, 22, 0.25)";
     ctx.fillRect(0, 0, width, height);
 
-    // Draw background grid & vector hints
+    // Draw background grid
     ctx.strokeStyle = "rgba(255, 255, 255, 0.04)";
     ctx.lineWidth = 1;
     for (let gx = 40; gx < width; gx += 40) {
@@ -165,16 +154,9 @@ function initHeroCanvas() {
       ctx.stroke();
     }
 
-    // Draw equilibrium point
-    let eqPx = width * 0.55;
-    let eqPy = height * 0.45;
-    if (mode === "matching-pennies") {
-      eqPx = width * 0.5;
-      eqPy = height * 0.5;
-    } else if (mode === "prisoners") {
-      eqPx = width - 50;
-      eqPy = height - 50;
-    }
+    // Equilibrium point (center)
+    const eqPx = width * 0.5;
+    const eqPy = height * 0.5;
 
     // Glow around equilibrium
     const grad = ctx.createRadialGradient(eqPx, eqPy, 2, eqPx, eqPy, 35);
@@ -190,27 +172,28 @@ function initHeroCanvas() {
     ctx.arc(eqPx, eqPy, 4, 0, Math.PI * 2);
     ctx.fill();
 
-    // Text annotation for equilibrium
     ctx.font = "10px JetBrains Mono, monospace";
     ctx.fillStyle = "rgba(147, 197, 253, 0.7)";
-    ctx.fillText(mode === "prisoners" ? "Równowaga (D, D)" : "Punkt Równowagi (Nash ESS)", eqPx - 70, eqPy - 10);
+    ctx.fillText("Punkt Równowagi (Nash ESS)", eqPx - 70, eqPy - 10);
 
     // Update and draw particles
     particles.forEach(p => {
-      const f = getField(p.x, p.y);
-      p.vx = p.vx * 0.92 + f.dx * 0.4;
-      p.vy = p.vy * 0.92 + f.dy * 0.4;
+      if (isRunning) {
+        const f = getField(p.x, p.y);
+        p.vx = p.vx * 0.92 + f.dx * 0.4;
+        p.vy = p.vy * 0.92 + f.dy * 0.4;
 
-      p.x += p.vx;
-      p.y += p.vy;
+        p.x += p.vx;
+        p.y += p.vy;
 
-      if (p.x < 20) p.x = width - 30;
-      if (p.x > width - 20) p.x = 30;
-      if (p.y < 20) p.y = height - 30;
-      if (p.y > height - 20) p.y = 30;
+        if (p.x < 20) p.x = width - 30;
+        if (p.x > width - 20) p.x = 30;
+        if (p.y < 20) p.y = height - 30;
+        if (p.y > height - 20) p.y = 30;
 
-      p.history.push({ x: p.x, y: p.y });
-      if (p.history.length > 8) p.history.shift();
+        p.history.push({ x: p.x, y: p.y });
+        if (p.history.length > 8) p.history.shift();
+      }
 
       // Trail
       if (p.history.length > 1) {
@@ -230,33 +213,78 @@ function initHeroCanvas() {
       ctx.fillStyle = p.color;
       ctx.fill();
     });
-
-    requestAnimationFrame(render);
   }
-  requestAnimationFrame(render);
 
-  // Mode buttons in Hero
-  const btnHawk = document.getElementById("heroBtnHawk");
-  const btnPennies = document.getElementById("heroBtnPennies");
-  const btnPrisoners = document.getElementById("heroBtnPrisoners");
-
-  function setMode(newMode, btn) {
-    mode = newMode;
-    [btnHawk, btnPennies, btnPrisoners].forEach(b => {
-      if (b) {
-        b.classList.remove("bg-blue-600", "text-white");
-        b.classList.add("bg-slate-800", "text-slate-300");
-      }
-    });
-    if (btn) {
-      btn.classList.remove("bg-slate-800", "text-slate-300");
-      btn.classList.add("bg-blue-600", "text-white");
+  function loop() {
+    if (isRunning) {
+      renderFrame();
+      animId = requestAnimationFrame(loop);
     }
   }
 
-  if (btnHawk) btnHawk.addEventListener("click", () => setMode("hawk-dove", btnHawk));
-  if (btnPennies) btnPennies.addEventListener("click", () => setMode("matching-pennies", btnPennies));
-  if (btnPrisoners) btnPrisoners.addEventListener("click", () => setMode("prisoners", btnPrisoners));
+  animId = requestAnimationFrame(loop);
+
+  // Play / Pause Button
+  const btnPlayPause = document.getElementById("heroPlayPauseBtn");
+  const fpsMetric = document.getElementById("heroFpsMetric");
+  if (btnPlayPause) {
+    btnPlayPause.addEventListener("click", () => {
+      if (isRunning) {
+        isRunning = false;
+        if (animId) cancelAnimationFrame(animId);
+        btnPlayPause.innerText = "Wznów";
+        btnPlayPause.classList.remove("text-blue-700", "bg-blue-50");
+        btnPlayPause.classList.add("text-emerald-700", "bg-emerald-50");
+        if (fpsMetric) {
+          fpsMetric.innerText = "Zatrzymano";
+          fpsMetric.className = "text-amber-400";
+        }
+      } else {
+        isRunning = true;
+        btnPlayPause.innerText = "Zatrzymaj";
+        btnPlayPause.classList.remove("text-emerald-700", "bg-emerald-50");
+        btnPlayPause.classList.add("text-blue-700", "bg-blue-50");
+        if (fpsMetric) {
+          fpsMetric.innerText = "60 FPS";
+          fpsMetric.className = "text-emerald-400";
+        }
+        animId = requestAnimationFrame(loop);
+      }
+    });
+  }
+
+  // Reset Button
+  const btnReset = document.getElementById("heroResetBtn");
+  if (btnReset) {
+    btnReset.addEventListener("click", () => {
+      ctx.clearRect(0, 0, width, height);
+      resetSwarm();
+      renderFrame();
+    });
+  }
+
+  // Click on canvas to spawn new trajectory burst
+  canvas.addEventListener("click", (e) => {
+    const rect = canvas.getBoundingClientRect();
+    const clickX = e.clientX - rect.left;
+    const clickY = e.clientY - rect.top;
+    for (let k = 0; k < 6; k++) {
+      particles.push({
+        x: clickX,
+        y: clickY,
+        vx: (Math.random() - 0.5) * 3,
+        vy: (Math.random() - 0.5) * 3,
+        radius: 2.5,
+        color: k % 2 === 0 ? "#f59e0b" : "#ec4899",
+        history: []
+      });
+    }
+    const countEl = document.getElementById("heroTrajCount");
+    if (countEl) countEl.innerText = `${particles.length} cząstek`;
+    if (!isRunning) {
+      renderFrame();
+    }
+  });
 }
 
 // ==========================================

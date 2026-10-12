@@ -606,7 +606,7 @@ def build_site():
         get_labs_and_quiz()
     ]
     
-    html = "\\n".join(sections)
+    html = "\n".join(sections)
     
     # Check for em-dashes
     if "—" in html or "–" in html:

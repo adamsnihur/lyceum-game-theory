@@ -31,6 +31,65 @@ async def run_tests():
         print(f"KaTeX rendered elements count: {katex_count}")
         assert katex_count > 15, f"KaTeX elements did not render properly! Count: {katex_count}"
 
+        # 1.5. Hero controls verification (Play/Pause & Reset)
+        print("Testing Hero Replicator Canvas Controls...")
+        play_btn = page.locator("#heroPlayPauseBtn")
+        reset_btn = page.locator("#heroResetBtn")
+        fps_metric = page.locator("#heroFpsMetric")
+        traj_count = page.locator("#heroTrajCount")
+
+        assert await play_btn.is_visible(), "heroPlayPauseBtn is not visible!"
+        assert await reset_btn.is_visible(), "heroResetBtn is not visible!"
+        initial_play_text = (await play_btn.inner_text()).strip()
+        assert initial_play_text == "Zatrzymaj", f"Expected initial text 'Zatrzymaj', got '{initial_play_text}'"
+
+        # Click pause
+        await play_btn.click()
+        await page.wait_for_timeout(300)
+        paused_play_text = (await play_btn.inner_text()).strip()
+        assert paused_play_text == "Wznów", f"Expected 'Wznów' after click, got '{paused_play_text}'"
+        fps_text = (await fps_metric.inner_text()).strip()
+        assert "Zatrzymano" in fps_text, f"Expected 'Zatrzymano' in FPS metric, got '{fps_text}'"
+
+        # Click resume
+        await play_btn.click()
+        await page.wait_for_timeout(300)
+        resumed_play_text = (await play_btn.inner_text()).strip()
+        assert resumed_play_text == "Zatrzymaj", f"Expected 'Zatrzymaj' after resume, got '{resumed_play_text}'"
+
+        # Click reset
+        await reset_btn.click()
+        await page.wait_for_timeout(300)
+        traj_text = (await traj_count.inner_text()).strip()
+        assert "cząstek" in traj_text, f"Expected particle count after reset, got '{traj_text}'"
+
+        # Check for visible literal "\\n" in DOM (excluding KaTeX mathml annotations and code)
+        print("Checking for visible literal '\\n' characters in body...")
+        literal_slash_n = await page.evaluate('''() => {
+            const bad = [];
+            const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT);
+            while (walker.nextNode()) {
+                const node = walker.currentNode;
+                if (node.parentElement && (
+                    node.parentElement.closest('.katex') ||
+                    node.parentElement.tagName === 'ANNOTATION' ||
+                    node.parentElement.tagName === 'SCRIPT' ||
+                    node.parentElement.tagName === 'STYLE' ||
+                    node.parentElement.tagName === 'CODE' ||
+                    node.parentElement.tagName === 'PRE'
+                )) {
+                    continue;
+                }
+                const t = node.textContent;
+                if (t.includes('\\\\n')) {
+                    bad.push({ tag: node.parentElement ? node.parentElement.tagName : 'NONE', text: t.trim() });
+                }
+            }
+            return bad;
+        }''')
+        print(f"Literal visible '\\n' occurrences: {len(literal_slash_n)}")
+        assert len(literal_slash_n) == 0, f"Found visible literal '\\n' in DOM: {literal_slash_n}"
+
         # 2. Unrendered LaTeX Gate
         print("Checking for unrendered LaTeX syntax in visible DOM...")
         unrendered_latex = await page.evaluate('''() => {
