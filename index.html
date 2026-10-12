@@ -1,0 +1,1155 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Teoria Gier - Giacomo Bonanno | Interaktywny Traktat i E-Learning Lyceum</title>
+  
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <!-- KaTeX for instantaneous client-side math rendering -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js"></script>
+
+  <!-- Plotly.js for interactive charts -->
+  <script src="https://cdn.plot.ly/plotly-2.27.0.min.js"></script>
+
+  <!-- Custom Stylesheet -->
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body class="min-h-screen text-slate-900 bg-slate-50 antialiased selection:bg-blue-100 selection:text-blue-900 overflow-x-hidden">
+
+  <!-- TOP HEADER -->
+  <header class="border-b border-slate-200 bg-white/90 backdrop-blur sticky top-0 z-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
+      <div class="flex items-center gap-3">
+        <div class="w-9 h-9 rounded-xl bg-blue-600 flex items-center justify-center text-white font-mono font-bold shadow-sm shadow-blue-500/20">
+          GT
+        </div>
+        <div>
+          <span class="text-xs font-mono font-bold uppercase tracking-wider text-blue-600">Lyceum Series &bull; Traktat 12</span>
+          <h1 class="text-sm sm:text-base font-extrabold text-slate-900 leading-none">Teoria Gier: Kompendium Giacomo Bonanno</h1>
+        </div>
+      </div>
+      <div class="flex items-center gap-3">
+        <span class="badge-tag bg-emerald-50 text-emerald-700 border border-emerald-200 hidden sm:inline-flex">
+          16 Rozdziałów &bull; 165 Zadań
+        </span>
+        <a href="#lab-sekcja" class="px-3 py-1.5 bg-blue-600 hover:bg-blue-700 text-white text-xs font-semibold rounded-lg shadow-sm transition">
+          Uruchom Symulatory
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- MAIN TWO-COLUMN CONTAINER -->
+  <div class="max-w-7xl mx-auto px-3 sm:px-6 py-6 sm:py-8 flex gap-8 min-w-0">
+
+    <!-- LEFT STICKY SIDEBAR (Linear / Stripe Docs Standard) -->
+    <aside class="hidden lg:block w-72 shrink-0">
+      <div class="sticky top-20 bg-white border border-slate-200 rounded-2xl p-5 shadow-sm space-y-4 max-h-[calc(100vh-6rem)] overflow-y-auto">
+        <div>
+          <span class="text-[10px] font-mono font-bold uppercase tracking-wider text-slate-400 block mb-1">Nawigacja Traktatu</span>
+          <input type="text" id="navSearchInput" placeholder="Szukaj pojęć (np. Nash, SPE)..." 
+                 class="w-full text-xs px-2.5 py-1.5 border border-slate-200 rounded-lg focus:outline-none focus:border-blue-500 font-sans">
+        </div>
+
+        <nav class="space-y-1 text-xs" id="sidebarNavList">
+          <a href="#hero-sekcja" class="nav-link active">
+            <span class="font-mono text-slate-400">00.</span> Dynamiczna Pętla Hero
+          </a>
+          
+          <div class="pt-2 text-[10px] font-mono uppercase tracking-wider text-slate-400 font-bold">Wprowadzenie</div>
+          <a href="#czesc-0" class="nav-link">
+            <span class="font-mono text-slate-400">01.</span> Geneza i Paradygmat Homo Rationalis
+          </a>
+
+          <div class="pt-2 text-[10px] font-mono uppercase tracking-wider text-slate-400 font-bold">Część I: Wypłaty Porządkowe</div>
+          <a href="#rozdzial-1" class="nav-link">
+            <span class="font-mono text-slate-400">02.</span> R1: Gry w Postaci Strategicznej
+          </a>
+          <a href="#rozdzial-2" class="nav-link">
+            <span class="font-mono text-slate-400">03.</span> R2: Doskonała Informacja i Indukcja Wsteczna
+          </a>
+          <a href="#rozdzial-3" class="nav-link">
+            <span class="font-mono text-slate-400">04.</span> R3: Gry Dynamiczne i SPE
+          </a>
+
+          <div class="pt-2 text-[10px] font-mono uppercase tracking-wider text-slate-400 font-bold">Część II: Wypłaty Kardynalne</div>
+          <a href="#rozdzial-4" class="nav-link">
+            <span class="font-mono text-slate-400">05.</span> R4: Teoria Oczekiwanej Użyteczności vNM
+          </a>
+          <a href="#rozdzial-5" class="nav-link">
+            <span class="font-mono text-slate-400">06.</span> R5: Strategie Mieszane i Racjonalizowalność
+          </a>
+          <a href="#rozdzial-6" class="nav-link">
+            <span class="font-mono text-slate-400">07.</span> R6: Dynamiczne Gry Kardynalne i Kuhn
+          </a>
+
+          <div class="pt-2 text-[10px] font-mono uppercase tracking-wider text-slate-400 font-bold">Część III: Wiedza i Przekonania</div>
+          <a href="#rozdzial-7" class="nav-link">
+            <span class="font-mono text-slate-400">08.</span> R7: Wiedza i Wspólna Wiedza (Aumann)
+          </a>
+          <a href="#rozdzial-8" class="nav-link">
+            <span class="font-mono text-slate-400">09.</span> R8: Przekonania, Bayes i Teoria AGM
+          </a>
+          <a href="#rozdzial-9" class="nav-link">
+            <span class="font-mono text-slate-400">10.</span> R9: Wspólna Wiedza o Racjonalności (CKR)
+          </a>
+
+          <div class="pt-2 text-[10px] font-mono uppercase tracking-wider text-slate-400 font-bold">Część IV: Uszczegółowienia SPE</div>
+          <a href="#rozdzial-10" class="nav-link">
+            <span class="font-mono text-slate-400">11.</span> R10: Słaba Równowaga Sekwencyjna (WSE)
+          </a>
+          <a href="#rozdzial-11" class="nav-link">
+            <span class="font-mono text-slate-400">12.</span> R11: Równowaga Sekwencyjna Krepsa-Wilsona
+          </a>
+          <a href="#rozdzial-12" class="nav-link">
+            <span class="font-mono text-slate-400">13.</span> R12: PBE i Twierdzenie Bonanno (2015)
+          </a>
+
+          <div class="pt-2 text-[10px] font-mono uppercase tracking-wider text-slate-400 font-bold">Część V: Informacja Niepełna</div>
+          <a href="#rozdzial-13" class="nav-link">
+            <span class="font-mono text-slate-400">14.</span> R13: Statyczna Informacja Niepełna i Harsanyi
+          </a>
+          <a href="#rozdzial-14" class="nav-link">
+            <span class="font-mono text-slate-400">15.</span> R14: Dynamiczna Informacja Niepełna i Reputacja
+          </a>
+          <a href="#rozdzial-15" class="nav-link">
+            <span class="font-mono text-slate-400">16.</span> R15: Przestrzenie Typów vs Stany Kripkego
+          </a>
+
+          <div class="pt-2 text-[10px] font-mono uppercase tracking-wider text-slate-400 font-bold">Interaktywne Laboratoria</div>
+          <a href="#lab-sekcja" class="nav-link">
+            <span class="font-mono text-slate-400">17.</span> 4 Symulatory Dotykowe 60 FPS
+          </a>
+          <a href="#quiz-sekcja" class="nav-link">
+            <span class="font-mono text-slate-400">18.</span> Quiz Diagnostyczny (6 Zadań)
+          </a>
+          <a href="#kod-sekcja" class="nav-link">
+            <span class="font-mono text-slate-400">19.</span> Implementacja w Pythonie
+          </a>
+          <a href="#bibliografia-sekcja" class="nav-link">
+            <span class="font-mono text-slate-400">20.</span> Bibliografia Pierwotna &bull; Linki DOI
+          </a>
+        </nav>
+      </div>
+    </aside>
+
+    <!-- RIGHT MAIN CONTENT COLUMN -->
+    <main class="flex-1 space-y-6 sm:space-y-12 min-w-0 max-w-full">
+
+      <!-- HERO SECTION & 60 FPS MOTION LOOP -->
+      <section id="hero-sekcja" class="saas-card p-4 sm:p-8 bg-white border border-slate-200">
+        <div class="flex flex-wrap items-center justify-between gap-2 mb-4">
+          <div class="flex flex-wrap items-center gap-2">
+            <span class="badge-tag bg-blue-100 text-blue-800">Akademicki Traktat Poznawczy</span>
+            <span class="badge-tag bg-slate-100 text-slate-700">60 FPS Motion Canvas</span>
+          </div>
+          <span class="text-xs font-mono text-slate-400">Giacomo Bonanno (UC Davis, 2015)</span>
+        </div>
+
+        <h2 class="text-xl sm:text-3xl font-black text-slate-900 tracking-tight leading-tight mb-3">
+          Architektura Decyzji Strategicznych: Od Dominacji Porządkowej po Epistemiczną Równowagę Bayesowską
+        </h2>
+        
+        <p class="text-slate-600 text-xs sm:text-sm leading-relaxed mb-6">
+          Niniejsza platforma stanowi kompletne, interaktywne odwzorowanie monumentalnego dzieła <em>Game Theory</em> Giacomo Bonanno.
+          Wykład prowadzi przez 15 rozdziałów: od elementarnej eliminacji strategii zdominowanych w grach macierzowych, przez aksjomatyzację von Neumanna-Morgensterna,
+          modele wiedzy wyższych rzędów Roberta Aumanna, aż po unifikację równowag sekwencyjnych za pomocą teorii rewizji przekonań AGM.
+        </p>
+
+        <!-- Canvas Container -->
+        <div class="bg-slate-950 p-3 sm:p-4 rounded-2xl shadow-inner border border-slate-800 min-w-0 max-w-full">
+          <div class="flex flex-wrap items-center justify-between gap-2 mb-3">
+            <div class="flex items-center gap-2">
+              <span class="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse"></span>
+              <span class="text-xs font-mono font-medium text-slate-300">Portret Fazowy: Dynamika Replikatorowa i Atraktory Nasha</span>
+            </div>
+            <div class="flex flex-wrap items-center gap-1.5">
+              <button id="heroBtnHawk" class="px-2 py-1 text-[10px] sm:text-[11px] font-mono rounded bg-blue-600 text-white transition">Jastrząb-Gołąb</button>
+              <button id="heroBtnPennies" class="px-2 py-1 text-[10px] sm:text-[11px] font-mono rounded bg-slate-800 text-slate-300 transition">Matching Pennies</button>
+              <button id="heroBtnPrisoners" class="px-2 py-1 text-[10px] sm:text-[11px] font-mono rounded bg-slate-800 text-slate-300 transition">Dylemat Więźnia</button>
+            </div>
+          </div>
+          <canvas id="heroCanvas"></canvas>
+          <div class="mt-2 text-center text-[10px] sm:text-[11px] font-mono text-slate-400">
+            Cząstki reprezentują rozkłady częstości populacyjnych strategii. Każda trajektoria podąża za wektorem gradientu wypłat oczekiwanych.
+          </div>
+        </div>
+      </section>
+
+      <!-- ROZDZIAŁ 0: WPROWADZENIE -->
+      <section id="czesc-0" class="saas-card p-4 sm:p-8 space-y-4">
+        <div class="flex items-center gap-2">
+          <span class="badge-tag bg-blue-50 text-blue-700 border border-blue-200">Rozdział 0</span>
+          <span class="text-xs font-mono text-slate-400">Podstawy Filozoficzne</span>
+        </div>
+        <h3 class="text-lg sm:text-xl font-bold text-slate-900">Geneza, Zakres i Paradygmat Homo Rationalis</h3>
+        
+        <p class="text-xs sm:text-sm text-slate-700 leading-relaxed">
+          Teoria gier narodziła się na styku czystej matematyki i ekonomii. Od prac <strong>Ernsta Zermelo (1913)</strong> badającego skończoność partii szachowych,
+          poprzez formalizację <strong>Johna von Neumanna (1928)</strong> i fundamentalne dzieło <em>Theory of Games and Economic Behavior</em> (von Neumann & Morgenstern, 1944),
+          aż po rewolucję <strong>Johna Nasha (1950-1951)</strong>, teoria dostarcza ścisłego języka do analizy interakcji strategicznych.
+        </p>
+
+        <div class="p-3 sm:p-4 bg-slate-50 border-l-4 border-blue-600 rounded-r-xl text-xs text-slate-800 leading-relaxed italic">
+          &bdquo;Mówiąc krótko, teoria gier i teoria ekonomii zajmują się interaktywnym zachowaniem <em>Homo rationalis</em> - człowieka racjonalnego.
+          Homo rationalis to gatunek, który zawsze działa zarówno celowo, jak i logicznie, posiada ściśle określone cele, jest motywowany wyłącznie pragnieniem
+          zbliżenia się do tych celów tak bardzo, jak to możliwe, i posiada zdolności kalkulacyjne wymagane, aby to uczynić.&rdquo;
+          <div class="text-right text-[11px] font-sans font-semibold text-slate-500 not-italic mt-1">- Robert Aumann (1985, s. 35)</div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 pt-2">
+          <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl">
+            <h4 class="text-xs font-bold uppercase text-slate-700 font-mono mb-1">Gry Kooperacyjne</h4>
+            <p class="text-xs text-slate-600">
+              Zakładają możliwość bezpośredniej komunikacji, formowania trwałych koalicji i zawierania <em>prawnie wiążących umów</em> (binding agreements).
+              Wykorzystywane m.in. do analizy systemów głosowania, wartości Shapleya i sprawiedliwego podziału kosztów.
+            </p>
+          </div>
+          <div class="p-4 bg-blue-50/60 border border-blue-200 rounded-xl">
+            <h4 class="text-xs font-bold uppercase text-blue-900 font-mono mb-1">Gry Niekooperacyjne (Zakres Podręcznika)</h4>
+            <p class="text-xs text-blue-950">
+              Analizują sytuacje, w których gracze nie mogą się komunikować lub porozumienia nie mogą być prawnie egzekwowane (np. zakaz karteli i zmów cenowych w prawie antymonopolowym).
+              Wszelkie porozumienia muszą być <em>samoegzekwujące się</em> (self-enforcing).
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- ROZDZIAŁ 1: GRY PORZĄDKOWE W POSTACI STRATEGICZNEJ -->
+      <section id="rozdzial-1" class="saas-card p-4 sm:p-8 space-y-6">
+        <div class="flex items-center gap-2">
+          <span class="badge-tag bg-blue-50 text-blue-700 border border-blue-200">Część I &bull; Rozdział 1</span>
+          <span class="text-xs font-mono text-slate-400">Strategic-Form Ordinal Games</span>
+        </div>
+        <h3 class="text-lg sm:text-xl font-bold text-slate-900">Gry Porządkowe w Postaci Strategicznej</h3>
+
+        <div class="space-y-3 text-xs sm:text-sm text-slate-700 leading-relaxed">
+          <h4 class="font-bold text-slate-900 text-sm sm:text-base">1.1. Ramka gry a gra (Game Frame vs Game)</h4>
+          <p>
+            Bonanno kładzie fundamentalny nacisk na rozróżnienie <strong>ramki gry</strong> od samej gry. Ramka gry w postaci strategicznej to czwórka:
+          </p>
+          <div class="p-3 bg-slate-50 rounded-xl border border-slate-200 font-mono text-xs overflow-x-auto">
+            $$\langle I, (S_1, S_2, \dots, S_n), O, f \rangle$$
+          </div>
+          <p>
+            gdzie $I = \{1, \dots, n\}$ jest zbiorem graczy, $S_i$ zbiorem strategii gracza $i$, $S = S_1 \times \dots \times S_n$ zbiorem profili strategii,
+            $O$ zbiorem rezultatów fizycznych, a $f: S \to O$ funkcją przypisującą profilowi strategii rezultat.
+            Dopiero dodanie <strong>preferencji porządkowych</strong> każdego gracza $\succsim_i$ nad zbiorem rezultatów $O$ tworzy <em>grę</em>.
+            Preferencje muszą być <strong>zupełne</strong> ($\forall o, o': o \succsim_i o' \lor o' \succsim_i o$) oraz <strong>przechodnie</strong> ($o \succsim_i o' \land o' \succsim_i o'' \implies o \succsim_i o''$).
+            Gdy preferencje reprezentujemy funkcją użyteczności $U_i: O \to \mathbb{R}$, otrzymujemy zredukowaną postać gry z funkcją wypłat $\pi_i(s) = U_i(f(s))$.
+          </p>
+        </div>
+
+        <div class="space-y-3 text-xs sm:text-sm text-slate-700 leading-relaxed border-t border-slate-150 pt-4">
+          <h4 class="font-bold text-slate-900 text-sm sm:text-base">1.2. Dominacja ścisła i słaba (Strict & Weak Dominance)</h4>
+          <p>
+            Niech $s_{-i} \in S_{-i}$ oznacza wektor wyborów wszystkich graczy poza graczem $i$.
+          </p>
+          <ul class="list-disc list-inside space-y-1 text-xs text-slate-700 pl-2">
+            <li><strong>Ścisła dominacja:</strong> Strategia $a$ ściśle dominuje $b$, jeśli $\forall s_{-i} \in S_{-i}: \pi_i(a, s_{-i}) > \pi_i(b, s_{-i})$.</li>
+            <li><strong>Słaba dominacja:</strong> Strategia $a$ słabo dominuje $b$, jeśli $\forall s_{-i}: \pi_i(a, s_{-i}) \ge \pi_i(b, s_{-i})$ oraz $\exists \bar{s}_{-i}: \pi_i(a, \bar{s}_{-i}) > \pi_i(b, \bar{s}_{-i})$.</li>
+            <li><strong>Równoważność:</strong> Strategie $a$ i $b$ są równoważne, gdy dają identyczne wypłaty w każdym stanie rywali: $\forall s_{-i}: \pi_i(a, s_{-i}) = \pi_i(b, s_{-i})$.</li>
+          </ul>
+          <p>
+            Strategia jest <em>ściśle dominująca</em>, gdy ściśle dominuje każdą inną strategię danego gracza. Może istnieć co najwyżej jedna taka strategia.
+            W klasycznym Dylemacie Więźnia (Prisoner's Dilemma) strategia zdrady jest ściśle dominująca dla każdego gracza, co prowadzi do równowagi w strategiach ściśle dominujących,
+            która jest ściśle gorsza w sensie Pareto od wzajemnej współpracy.
+          </p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 border-t border-slate-150 pt-4">
+          <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl space-y-2">
+            <span class="text-xs font-mono font-bold text-blue-600 uppercase">Twierdzenie 1.1 &bull; William Vickrey (1961)</span>
+            <h5 class="text-sm font-bold text-slate-900">Aukcja Drugiej Ceny (Vickrey Auction)</h5>
+            <p class="text-xs text-slate-600 leading-relaxed">
+              W zapieczętowanej aukcji drugiej ceny, jeżeli oferent $i$ jest egoistyczny i chciwy (ocenia wynik jako $v_i - p$ przy wygranej i 0 przy przegranej),
+              wówczas zgłoszenie oferty równej własnej wycenie:
+              $$b_i = v_i$$
+              jest <strong>strategią słabo dominującą</strong>.
+            </p>
+            <p class="text-[11px] text-slate-500">
+              Dowód: jeśli rywal zaoferuje $b_{\max} \le v_i$, oferta $v_i$ wygrywa i płaci $b_{\max} \ge 0$. Każda inna wygrywająca oferta płaci to samo, a niższa oferta ryzykowałaby utratę opłacalnego przedmiotu. Jeśli $b_{\max} > v_i$, wygrana przyniosłaby ujemną wypłatę $v_i - b_{\max} < 0$.
+            </p>
+          </div>
+
+          <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl space-y-2">
+            <span class="text-xs font-mono font-bold text-blue-600 uppercase">Twierdzenie 1.2 &bull; Edward Clarke (1971)</span>
+            <h5 class="text-sm font-bold text-slate-900">Mechanizm Pivotowy (Clarke Mechanism)</h5>
+            <p class="text-xs text-slate-600 leading-relaxed">
+              Projekt publiczny o koszcie $C$ i udziałach kosztowych $c_i$ jest efektywny, gdy $\sum v_i > C$.
+              Uczestnik $i$ jest <em>pivotowy</em>, gdy jego obecność zmienia decyzję społeczną. Płaci on wówczas podatek:
+              $$t_i = \left| \sum_{j \ne i} w_j - \sum_{j \ne i} c_j \right|$$
+              Prawdomówne zgłoszenie wyceny ($w_i = v_i$) jest strategią słabo dominującą!
+            </p>
+          </div>
+        </div>
+
+        <div class="space-y-3 text-xs sm:text-sm text-slate-700 leading-relaxed border-t border-slate-150 pt-4">
+          <h4 class="font-bold text-slate-900 text-sm sm:text-base">1.5. Procedury eliminacji iteracyjnej (IDSDS vs IDWDS)</h4>
+          <p>
+            <strong>IDSDS (Iterated Deletion of Strictly Dominated Strategies):</strong> W każdym kroku usuwamy wszystkie strategie ściśle zdominowane.
+            W grach skończonych procedura zawsze zbiega do podzbioru $G^\infty$ w skończonej liczbie kroków.
+            Kolejność usuwania strategii <em>nie ma żadnego wpływu na wynik końcowy</em> (Remark 1.5).
+          </p>
+          <p>
+            <strong>IDWDS (Iterated Deletion of Weakly Dominated Strategies):</strong> Dopuszcza usuwanie strategii słabo zdominowanych.
+            Uwaga: kolejność eliminacji <em>wpływa na rezultat</em>! Aby procedura była jednoznaczna, Bonanno definiuje IDWDS jako jednoczesne usunięcie w każdym kroku <em>wszystkich</em> strategii słabo zdominowanych.
+          </p>
+        </div>
+
+        <div class="space-y-3 text-xs sm:text-sm text-slate-700 leading-relaxed border-t border-slate-150 pt-4">
+          <h4 class="font-bold text-slate-900 text-sm sm:text-base">1.6. Równowaga Nasha i Konkurencja Cournota</h4>
+          <p>
+            Profil strategii $s^* = (s_1^*, \dots, s_n^*)$ jest <strong>Równowagą Nasha</strong>, jeśli dla każdego gracza $i$:
+            $$\forall s_i \in S_i: \quad \pi_i(s_i^*, s_{-i}^*) \ge \pi_i(s_i, s_{-i}^*)$$
+            Każdy gracz wybiera najlepszą odpowiedź (best reply) na wybory rywali.
+            Dla gier o ciągłych zbiorach strategii, pionierski model Augustin Cournota (1838) rozważa duopol o popycie $P(Q) = a - b(q_1 + q_2)$ i kosztach $C_i(q_i) = c \cdot q_i$.
+            Maksymalizacja zysków $\frac{\partial \pi_i}{\partial q_i} = a - c - 2bq_i - bq_j = 0$ prowadzi do unikalnej równowagi:
+            $$q_1^* = q_2^* = \frac{a - c}{3b}, \quad P^* = \frac{a + 2c}{3}, \quad \pi_1^* = \pi_2^* = \frac{(a - c)^2}{9b}$$
+          </p>
+        </div>
+      </section>
+
+      <!-- ROZDZIAŁ 2: DYNAMICZNE GRY O DOSKONAŁEJ INFORMACJI -->
+      <section id="rozdzial-2" class="saas-card p-4 sm:p-8 space-y-6">
+        <div class="flex items-center gap-2">
+          <span class="badge-tag bg-blue-50 text-blue-700 border border-blue-200">Część I &bull; Rozdział 2</span>
+          <span class="text-xs font-mono text-slate-400">Dynamic Games with Perfect Information</span>
+        </div>
+        <h3 class="text-lg sm:text-xl font-bold text-slate-900">Gry Dynamiczne o Doskonałej Informacji i Indukcja Wsteczna</h3>
+
+        <div class="space-y-3 text-xs sm:text-sm text-slate-700 leading-relaxed">
+          <h4 class="font-bold text-slate-900 text-sm sm:text-base">2.1. Drzewa decyzyjne i algorytm wstecznej indukcji</h4>
+          <p>
+            Gra w postaci ekstensywnej o doskonałej informacji jest reprezentowana przez ukorzenione drzewo skierowane.
+            W każdym węźle decyzyjnym dokładnie jeden gracz podejmuje decyzję, znając pełną historię wszystkich dotychczasowych posunięć.
+          </p>
+          <p>
+            <strong>Algorytm indukcji wstecznej (Definicja 2.3):</strong> Zaczynając od węzłów przedostatnich (penultimate nodes), których bezpośrednimi następcami są wyłącznie węzły terminalne,
+            gracz wybiera akcję maksymalizującą jego własną wypłatę. Węzeł decyzyjny zostaje zastąpiony wektorem wypłat wybranego następcy.
+            Procedura powtarzana jest wstecz aż do osiągnięcia korzenia.
+          </p>
+        </div>
+
+        <div class="space-y-3 text-xs sm:text-sm text-slate-700 leading-relaxed border-t border-slate-150 pt-4">
+          <h4 class="font-bold text-slate-900 text-sm sm:text-base">2.3. Pojęcie strategii: Kompletny plan kontyngentny</h4>
+          <p>
+            <strong>Definicja 2.4:</strong> Strategia w grze o doskonałej informacji to lista wyborów, po jednym dla <em>każdego węzła decyzyjnego</em> tego gracza,
+            nawet takiego, który nie zostanie osiągnięty w trakcie faktycznej rozgrywki!
+            Ta cecha wprowadza formalną nadmiarowość (redundancy), lecz jest kluczowa dla analizy gróźb poza ścieżką równowagi.
+          </p>
+          <div class="p-3 bg-amber-50 border border-amber-200 rounded-xl text-xs text-amber-900">
+            <strong>Twierdzenie 2.1:</strong> Każde rozwiązanie indukcji wstecznej jest równowagą Nasha powiązanej postaci strategicznej.
+            Jednak zbiór równowag Nasha postaci strategicznej jest z reguły ściśle szerszy i zawiera równowagi oparte na <em>niewiarygodnych groźbach</em> (Incredible Threats).
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 border-t border-slate-150 pt-4">
+          <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl space-y-2">
+            <span class="text-xs font-mono font-bold text-blue-600 uppercase">Paradoks Seltena (1978)</span>
+            <h5 class="text-sm font-bold text-slate-900">Gra w Sieć Sklepów (Chain Store Paradox)</h5>
+            <p class="text-xs text-slate-600 leading-relaxed">
+              Monopolista operuje w $m$ miastach. W każdym mieście pretendent rozważa wejście.
+              Intuicja nakazuje walczyć z pierwszymi pretendentami, by zbudować reputację. Jednak w indukcji wstecznej
+              w ostatnim mieście monopolista na pewno ulegnie (ponieważ walka przynosi zysk 0 zamiast 2).
+              Wsteczna indukcja rozwija ten argument aż do miasta 1: monopolista ulega we wszystkich miastach!
+            </p>
+          </div>
+
+          <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl space-y-2">
+            <span class="text-xs font-mono font-bold text-blue-600 uppercase">Twierdzenia 2.2 i 2.3 &bull; Zermelo (1913)</span>
+            <h5 class="text-sm font-bold text-slate-900">Determinizm Gier Dwuosobowych</h5>
+            <p class="text-xs text-slate-600 leading-relaxed">
+              W każdej skończonej grze dwuosobowej typu wygrana-przegrana o doskonałej informacji, <strong>jeden z graczy posiada strategię wygrywającą</strong>.
+              Dla gier dopuszczających remis (szachy, warcaby, kółko i krzyżyk): albo Gracz 1 ma strategię wygrywającą, albo Gracz 2 ma strategię wygrywającą,
+              albo obaj gracze posiadają strategie gwarantujące co najmniej remis!
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- ROZDZIAŁ 3: OGÓLNE GRY DYNAMICZNE I NIEDOSKONAŁA INFORMACJA -->
+      <section id="rozdzial-3" class="saas-card p-4 sm:p-8 space-y-6">
+        <div class="flex items-center gap-2">
+          <span class="badge-tag bg-blue-50 text-blue-700 border border-blue-200">Część I &bull; Rozdział 3</span>
+          <span class="text-xs font-mono text-slate-400">General Dynamic Games & SPE</span>
+        </div>
+        <h3 class="text-lg sm:text-xl font-bold text-slate-900">Ogólne Gry Dynamiczne, Podgry i SPE</h3>
+
+        <div class="space-y-3 text-xs sm:text-sm text-slate-700 leading-relaxed">
+          <h4 class="font-bold text-slate-900 text-sm sm:text-base">3.1. Zbiory informacyjne i doskonała pamięć (Perfect Recall)</h4>
+          <p>
+            Gdy gracz podejmuje decyzję nie wiedząc, w którym dokładnie węźle drzewa się znajduje, węzły te łączone są w <strong>zbiór informacyjny</strong> $\mathcal{D}_i$.
+            Definicja 3.1 nakłada fundamentalny warunek <em>doskonałej pamięci</em> (Perfect Recall): gracz w każdym momencie pamięta wszystkie informacje,
+            które posiadał w przeszłości, oraz wszystkie decyzje, które sam podjął.
+          </p>
+        </div>
+
+        <div class="space-y-3 text-xs sm:text-sm text-slate-700 leading-relaxed border-t border-slate-150 pt-4">
+          <h4 class="font-bold text-slate-900 text-sm sm:text-base">3.3 - 3.4. Podgry właściwe i Równowaga Doskonała w Podgrach (SPE)</h4>
+          <p>
+            <strong>Podgra właściwa (Definicja 3.3):</strong> Część drzewa rozpoczynająca się w pojedynczym węźle decyzyjnym (różnym od korzenia), która <em>nie rozcina żadnego zbioru informacyjnego</em>.
+          </p>
+          <div class="p-3 bg-blue-50 border border-blue-200 rounded-xl text-xs text-blue-950 font-medium">
+            <strong>Definicja 3.5 (Reinhard Selten, 1965):</strong> Profil strategii $s$ jest <strong>równowagą doskonałą w podgrach (Subgame-Perfect Equilibrium - SPE)</strong>, jeśli:
+            <ol class="list-decimal list-inside mt-1 space-y-0.5">
+              <li>$s$ jest równowagą Nasha całej gry, oraz</li>
+              <li>dla każdej właściwej podgry $G$, restrykcja $s|_G$ jest równowagą Nasha podgry $G$.</li>
+            </ol>
+          </div>
+          <p>
+            W grach o doskonałej informacji SPE pokrywa się z indukcją wsteczną. Jeśli gra nie posiada żadnych podgier właściwych, pojęcie SPE degraduje się do zwykłej równowagi Nasha.
+          </p>
+        </div>
+      </section>
+
+      <!-- ROZDZIAŁ 4: TEORIA OCZEKIWANEJ UŻYTECZNOŚCI -->
+      <section id="rozdzial-4" class="saas-card p-4 sm:p-8 space-y-6">
+        <div class="flex items-center gap-2">
+          <span class="badge-tag bg-blue-50 text-blue-700 border border-blue-200">Część II &bull; Rozdział 4</span>
+          <span class="text-xs font-mono text-slate-400">Expected Utility Theory</span>
+        </div>
+        <h3 class="text-lg sm:text-xl font-bold text-slate-900">Teoria Oczekiwanej Użyteczności von Neumanna-Morgensterna</h3>
+
+        <div class="space-y-3 text-xs sm:text-sm text-slate-700 leading-relaxed">
+          <h4 class="font-bold text-slate-900 text-sm sm:text-base">4.1. Loterie pieniężne i postawy wobec ryzyka</h4>
+          <p>
+            Dla loterii pieniężnej $L = \begin{pmatrix} \$x_1 & \dots & \$x_n \\ p_1 & \dots & p_n \end{pmatrix}$ o wartości oczekiwanej $\mathbb{E}[L] = \sum p_i x_i$:
+          </p>
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs">
+            <div class="p-3 bg-slate-50 border border-slate-200 rounded-lg">
+              <span class="font-bold text-slate-800 block">Awersja do ryzyka</span>
+              $$\$ \mathbb{E}[L] \succ L$$
+              Wklęsła funkcja użyteczności ($U'' < 0$).
+            </div>
+            <div class="p-3 bg-slate-50 border border-slate-200 rounded-lg">
+              <span class="font-bold text-slate-800 block">Neutralność</span>
+              $$\$ \mathbb{E}[L] \sim L$$
+              Liniowa funkcja użyteczności ($U(m) = c \cdot m$).
+            </div>
+            <div class="p-3 bg-slate-50 border border-slate-200 rounded-lg">
+              <span class="font-bold text-slate-800 block">Zamiłowanie do ryzyka</span>
+              $$L \succ \$ \mathbb{E}[L]$$
+              Wypukła funkcja użyteczności ($U'' > 0$).
+            </div>
+          </div>
+        </div>
+
+        <div class="space-y-3 text-xs sm:text-sm text-slate-700 leading-relaxed border-t border-slate-150 pt-4">
+          <h4 class="font-bold text-slate-900 text-sm sm:text-base">4.2 - 4.3. Twierdzenia i Aksjomaty vNM</h4>
+          <p>
+            <strong>Twierdzenie 4.1 (vNM Representation, 1944):</strong> Preferencje decydenta nad loteriami $\mathcal{L}(O)$ spełniają aksjomaty vNM wtedy i tylko wtedy, gdy istnieje funkcja $U: O \to \mathbb{R}$ taka, że decydent maksymalizuje oczekiwaną użyteczność:
+            $$L \succ L' \iff \mathbb{E}[U(L)] > \mathbb{E}[U(L')]$$
+          </p>
+          <p>
+            <strong>Twierdzenie 4.2 (Kardynalność):</strong> Funkcja użyteczności vNM jest wyznaczona jednoznacznie z dokładnością do <em>dodatniej transformacji afinicznej</em>: $V(o) = a U(o) + b$, gdzie $a > 0$.
+            Cztery kluczowe aksjomaty: <strong>Zupełność i Przechodniość</strong>, <strong>Monotoniczność</strong>, <strong>Ciągłość</strong> (gwarantująca istnienie prawdopodobieństwa obojętności $o_i \sim p o_{\text{best}} + (1-p) o_{\text{worst}}$) oraz <strong>Niezależność/Zastępowalność</strong>.
+          </p>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4 pt-2">
+            <div class="p-3 bg-rose-50 border border-rose-200 rounded-xl text-xs text-rose-950">
+              <strong>Paradoks Allais (1953):</strong> Większość ludzi wybiera $A \succ B$ oraz $D \succ C$ w loteriach milionowych, bezpośrednio naruszając aksjomat niezależności vNM.
+            </div>
+            <div class="p-3 bg-amber-50 border border-amber-200 rounded-xl text-xs text-amber-950">
+              <strong>Paradoks Ellsberga (1961):</strong> Wybory w urnie z kulami o nieznanych proporcjach ujawniają <em>awersję do niejednoznaczności</em> (ambiguity aversion), której vNM nie potrafi odróżnić od czystego ryzyka.
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ROZDZIAŁ 5: STRATEGIE MIESZANE W POSTACI STRATEGICZNEJ -->
+      <section id="rozdzial-5" class="saas-card p-4 sm:p-8 space-y-6">
+        <div class="flex items-center gap-2">
+          <span class="badge-tag bg-blue-50 text-blue-700 border border-blue-200">Część II &bull; Rozdział 5</span>
+          <span class="text-xs font-mono text-slate-400">Mixed Strategies & Rationalizability</span>
+        </div>
+        <h3 class="text-lg sm:text-xl font-bold text-slate-900">Strategie Mieszane, Twierdzenie Nasha i Racjonalizowalność</h3>
+
+        <div class="space-y-3 text-xs sm:text-sm text-slate-700 leading-relaxed">
+          <h4 class="font-bold text-slate-900 text-sm sm:text-base">5.1 - 5.3. Twierdzenie Johna Nasha i Zasada Obojętności</h4>
+          <div class="p-3 bg-emerald-50 border border-emerald-200 rounded-xl text-xs text-emerald-950 font-medium">
+            <strong>Twierdzenie 5.1 (John Nash, 1951):</strong> Każda skończona gra w postaci strategicznej o wypłatach kardynalnych posiada co najmniej jedną równowagę Nasha w strategiach mieszanych.
+          </div>
+          <p>
+            <strong>Twierdzenie 5.2 (Zasada Obojętności):</strong> Jeżeli $\sigma^*$ jest równowagą mieszaną, a strategie $s_{ij}, s_{ik}$ należą do nośnika $\text{supp}(\sigma_i^*)$, to:
+            $$\Pi_i(s_{ij}, \sigma_{-i}^*) = \Pi_i(s_{ik}, \sigma_{-i}^*) = \Pi_i(\sigma^*)$$
+            Gracz nie uzyskuje żadnej premii z mieszania - jest obojętny między wszystkimi swoimi czystymi opcjami w nośniku! Randomizuje po to, by rywal nie odszedł od swojej strategii.
+          </p>
+        </div>
+
+        <div class="space-y-3 text-xs sm:text-sm text-slate-700 leading-relaxed border-t border-slate-150 pt-4">
+          <h4 class="font-bold text-slate-900 text-sm sm:text-base">5.4. Dominacja przez strategie mieszane i Twierdzenie Pearce'a (1984)</h4>
+          <p>
+            W grach o wypłatach kardynalnych strategia czysta może być <strong>ściśle zdominowana przez strategię mieszaną</strong>, nawet jeśli żadna pojedyncza strategia czysta jej nie dominuje.
+          </p>
+          <div class="p-3 bg-slate-50 border border-slate-200 rounded-xl text-xs text-slate-800">
+            <strong>Twierdzenie 5.3 (David Pearce, 1984):</strong> W grze 2-osobowej czysta strategia $s_i$ nie jest najlepszą odpowiedzią na żaden stan przekonań o rywalu wtedy i tylko wtedy, gdy $s_i$ jest ściśle zdominowana przez pewną strategię mieszaną $\sigma_i$.
+            Strategie, które przetrwają procedurę kardynalnego IDSDS, nazywamy <strong>strategiami racjonalizowalnymi</strong>.
+          </div>
+        </div>
+      </section>
+
+      <!-- ROZDZIAŁ 6: GRY DYNAMICZNE O WYPŁATACH KARDYNALNYCH -->
+      <section id="rozdzial-6" class="saas-card p-4 sm:p-8 space-y-6">
+        <div class="flex items-center gap-2">
+          <span class="badge-tag bg-blue-50 text-blue-700 border border-blue-200">Część II &bull; Rozdział 6</span>
+          <span class="text-xs font-mono text-slate-400">Dynamic Games with Cardinal Payoffs</span>
+        </div>
+        <h3 class="text-lg sm:text-xl font-bold text-slate-900">Strategie Behawioralne i Twierdzenie Kuhna</h3>
+
+        <div class="space-y-3 text-xs sm:text-sm text-slate-700 leading-relaxed">
+          <h4 class="font-bold text-slate-900 text-sm sm:text-base">6.1. Strategie mieszane a behawioralne</h4>
+          <p>
+            W grach ekstensywnych strategia mieszana wymaga przypisania prawdopodobieństw do każdego pełnego planu działania (co przy wielu węzłach prowadzi do eksplozji kombinatorycznej, np. 54 strategie czyste = 53 parametry).
+            <strong>Strategia behawioralna (Definicja 6.1)</strong> definiuje lokalne rozkłady prawdopodobieństwa niezależnie w każdym zbiorze informacyjnym (znacznie mniejsza liczba parametrów).
+          </p>
+          <div class="p-3 bg-blue-50 border border-blue-200 rounded-xl text-xs text-blue-950 font-medium">
+            <strong>Twierdzenie 6.1 (Harold W. Kuhn, 1953):</strong> W grach w postaci ekstensywnej z doskonałą pamięcią (Perfect Recall), strategie mieszane i strategie behawioralne są w pełni równoważne: dla każdej strategii mieszanej istnieje strategia behawioralna indukująca identyczny rozkład prawdopodobieństwa na węzłach terminalnych.
+          </div>
+        </div>
+
+        <div class="space-y-3 text-xs sm:text-sm text-slate-700 leading-relaxed border-t border-slate-150 pt-4">
+          <h4 class="font-bold text-slate-900 text-sm sm:text-base">6.3. Wady równowagi doskonałej w podgrach (SPE)</h4>
+          <p>
+            Jak demonstruje Bonanno w przykładzie z Rysunku 6.12, w grach bez właściwych podgier SPE pokrywa się z równowagą Nasha.
+            W efekcie SPE dopuszcza profile, w których gracz poza ścieżką równowagi planuje zagrać akcję <em>ściśle zdominowaną</em> w swoim zbiorze informacyjnym.
+            Aby wyeliminować takie patologie, konieczne są głębsze uszczegółowienia (refinements) oparte na systemach przekonań.
+          </p>
+        </div>
+      </section>
+
+      <!-- ROZDZIAŁ 7: WIEDZA I WSPÓLNA WIEDZA -->
+      <section id="rozdzial-7" class="saas-card p-4 sm:p-8 space-y-6">
+        <div class="flex items-center gap-2">
+          <span class="badge-tag bg-blue-50 text-blue-700 border border-blue-200">Część III &bull; Rozdział 7</span>
+          <span class="text-xs font-mono text-slate-400">Knowledge & Common Knowledge</span>
+        </div>
+        <h3 class="text-lg sm:text-xl font-bold text-slate-900">Epistemiczna Teoria Gier: Wiedza i Wspólna Wiedza Aumanna</h3>
+
+        <div class="space-y-3 text-xs sm:text-sm text-slate-700 leading-relaxed">
+          <h4 class="font-bold text-slate-900 text-sm sm:text-base">7.1. Przestrzeń stanów i Operator Wiedzy $K$</h4>
+          <p>
+            Niech $W$ będzie skończonym zbiorem stanów świata, a $\mathcal{I}_i$ partycją informacyjną gracza $i$.
+            Gracz $i$ wie, że zaszło zdarzenie $E \subseteq W$, gdy jego komórka informacji mieści się w $E$: $\mathcal{I}_i(w) \subseteq E$.
+            Operator wiedzy $K_i: 2^W \to 2^W$ spełnia aksjomaty <strong>S5 logiki modalnej</strong>:
+          </p>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs pt-1">
+            <div class="p-3 bg-slate-50 border border-slate-200 rounded-lg">
+              <strong>Aksjomat Prawdy (T):</strong> $K_i E \subseteq E$<br>
+              <span class="text-slate-500 text-[11px]">Wiedza nie może być fałszywa.</span>
+            </div>
+            <div class="p-3 bg-slate-50 border border-slate-200 rounded-lg">
+              <strong>Pozytywna Introspekcja (4):</strong> $K_i E \subseteq K_i K_i E$<br>
+              <span class="text-slate-500 text-[11px]">Jeśli gracz wie $E$, to wie, że wie $E$.</span>
+            </div>
+            <div class="p-3 bg-slate-50 border border-slate-200 rounded-lg">
+              <strong>Negatywna Introspekcja (5):</strong> $\neg K_i E \subseteq K_i \neg K_i E$<br>
+              <span class="text-slate-500 text-[11px]">Jeśli gracz nie wie $E$, wie, że nie wie $E$.</span>
+            </div>
+            <div class="p-3 bg-slate-50 border border-slate-200 rounded-lg">
+              <strong>Koniunkcja:</strong> $K_i(E \cap F) = K_i E \cap K_i F$<br>
+              <span class="text-slate-500 text-[11px]">Wiedza o iloczynie to iloczyn wiedzy.</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="space-y-3 text-xs sm:text-sm text-slate-700 leading-relaxed border-t border-slate-150 pt-4">
+          <h4 class="font-bold text-slate-900 text-sm sm:text-base">7.3. Definicja i Twierdzenie Aumanna o Wspólnej Wiedzy</h4>
+          <p>
+            Zdarzenie $E$ jest <strong>wspólną wiedzą (Common Knowledge)</strong>, gdy każdy wie $E$, każdy wie, że każdy wie $E$, i tak w nieskończoność:
+            $$CKE = K_1 E \cap K_2 E \cap K_1 K_2 E \cap K_2 K_1 E \cap \dots$$
+          </p>
+          <div class="p-4 bg-purple-50 border border-purple-200 rounded-xl text-xs text-purple-950 font-medium">
+            <strong>Twierdzenie 7.1 (Robert Aumann, 1976):</strong> Zdarzenie $E$ jest wspólną wiedzą w stanie $w$ wtedy i tylko wtedy, gdy cała komórka partycji wspólnej wiedzy $\mathcal{I}_{CK}(w)$ zawiera się w $E$:
+            $$w \in CKE \iff \mathcal{I}_{CK}(w) \subseteq E$$
+            gdzie $\mathcal{I}_{CK}$ jest najdrobniejszym wspólnym zgrubieniem (finest common coarsening) indywidualnych partycji informacyjnych!
+          </div>
+        </div>
+      </section>
+
+      <!-- ROZDZIAŁ 8: PRZEKONANIA, BAYES I TEORIA AGM -->
+      <section id="rozdzial-8" class="saas-card p-4 sm:p-8 space-y-6">
+        <div class="flex items-center gap-2">
+          <span class="badge-tag bg-blue-50 text-blue-700 border border-blue-200">Część III &bull; Rozdział 8</span>
+          <span class="text-xs font-mono text-slate-400">Probabilistic Beliefs & Belief Revision</span>
+        </div>
+        <h3 class="text-lg sm:text-xl font-bold text-slate-900">Przekonania, Aktualizacja Bayesa i Twierdzenie o Zgodzie</h3>
+
+        <div class="space-y-3 text-xs sm:text-sm text-slate-700 leading-relaxed">
+          <h4 class="font-bold text-slate-900 text-sm sm:text-base">8.1 - 8.2. Pewność a wiedza i Reguła Bayesa</h4>
+          <p>
+            Bonanno podkreśla kardynalną różnicę: <strong>wiedza implikuje prawdę</strong> ($KE \subseteq E$), podczas gdy <strong>pewność</strong> ($P(E) = 1$) dopuszcza błąd poznawczy (można być w 100% pewnym fałszywego zdarzenia).
+            Dla zdarzeń niespodziewanych z $P(E) > 0$ stosujemy standardową regułę Bayesa:
+            $$P(E|F) = \frac{P(F|E)P(E)}{P(F)}$$
+          </p>
+        </div>
+
+        <div class="space-y-3 text-xs sm:text-sm text-slate-700 leading-relaxed border-t border-slate-150 pt-4">
+          <h4 class="font-bold text-slate-900 text-sm sm:text-base">8.3. Teoria Rewizji Przekonań AGM (Alchourrón, Gärdenfors, Makinson, 1985)</h4>
+          <p>
+            Co zrobić, gdy agent otrzymuje informację zaskakującą, o zerowym prawdopodobieństwie a priori ($P(E) = 0$)?
+            Dzielenie przez zero w formule Bayesa jest niedozwolone. Odpowiedź daje aksjomatyczna <strong>teoria AGM</strong>.
+            Zgodnie z Twierdzeniem Grove'a (1988) i Bonanno (2009), racjonalna rewizja przekonań jest reprezentowana przez <strong>porządek wiarygodności</strong> $\precsim$ (total preorder na stanach).
+            Po nadejściu informacji $E$, agent uznaje za możliwe wyłącznie stany najbardziej wiarygodne wewnątrz podzbioru $E$.
+          </p>
+        </div>
+
+        <div class="space-y-3 text-xs sm:text-sm text-slate-700 leading-relaxed border-t border-slate-150 pt-4">
+          <h4 class="font-bold text-slate-900 text-sm sm:text-base">8.4 - 8.5. Wspólny rozkład a priori i Twierdzenie o Braku Zgody na Niezgodę</h4>
+          <div class="p-4 bg-emerald-50 border border-emerald-200 rounded-xl text-xs text-emerald-950 font-medium">
+            <strong>Twierdzenie 8.1 (Agreement Theorem; Robert Aumann, 1976):</strong> Jeżeli dwaj racjonalni gracze posiadają wspólny rozkład a priori (Common Prior Assumption) i w pewnym stanie $w$ jest wspólną wiedzą, że Gracz 1 przypisuje zdarzeniu $E$ prawdopodobieństwo $p$, a Gracz 2 prawdopodobieństwo $q$, to:
+            $$p = q$$
+            Dwaj racjonalni gracze o wspólnych przekonaniach wyjściowych nie mogą zgodzić się na niezgodę (cannot agree to disagree)!
+          </div>
+        </div>
+      </section>
+
+      <!-- ROZDZIAŁ 9: WSPÓLNA WIEDZA O RACJONALNOŚCI (CKR) -->
+      <section id="rozdzial-9" class="saas-card p-4 sm:p-8 space-y-6">
+        <div class="flex items-center gap-2">
+          <span class="badge-tag bg-blue-50 text-blue-700 border border-blue-200">Część III &bull; Rozdział 9</span>
+          <span class="text-xs font-mono text-slate-400">Common Knowledge of Rationality</span>
+        </div>
+        <h3 class="text-lg sm:text-xl font-bold text-slate-900">Wspólna Wiedza o Racjonalności (CKR) w Grach</h3>
+
+        <div class="space-y-3 text-xs sm:text-sm text-slate-700 leading-relaxed">
+          <h4 class="font-bold text-slate-900 text-sm sm:text-base">9.1 - 9.2. Epistemiczna charakteryzacja eliminacji dominacji</h4>
+          <p>
+            W epistemicznym modelu gry każdy stan $w$ przypisuje graczom przekonania oraz wybrane strategie $\sigma_i(w)$.
+            Gracz jest racjonalny w stanie $w$, jeśli jego wybór jest najlepszą odpowiedzią na jego subiektywne przekonania.
+            Niech $R$ oznacza zdarzenie, że wszyscy gracze są racjonalni.
+          </p>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4 pt-1">
+            <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl text-xs">
+              <strong class="text-blue-700 block mb-1">Twierdzenie 9.1:</strong>
+              Jeśli w stanie $w$ zachodzi wspólna wiedza o racjonalności ($w \in CKR$), to profil strategii $\sigma(w)$ musi przetrwać procedurę iteracyjnej eliminacji strategii ściśle zdominowanych (IDSDS).
+            </div>
+            <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl text-xs">
+              <strong class="text-blue-700 block mb-1">Twierdzenie 9.2:</strong>
+              Każdy profil strategii, który przetrwa procedurę IDSDS, może być zrealizowany w pewnym modelu epistemicznym w stanie, w którym zachodzi $CKR$.
+            </div>
+          </div>
+          <div class="p-3 bg-rose-50 border border-rose-200 rounded-xl text-xs text-rose-950 font-medium">
+            <strong>Kluczowy Wniosek Teoretyczny:</strong> Wspólna wiedza o racjonalności ($CKR$) <em>NIE implikuje</em> równowagi Nasha!
+            Równowaga Nasha wymaga nie tylko racjonalności i wspólnej wiedzy o niej, ale także <strong>zgodności przekonań</strong> (prawidłowego przewidywania wyborów rywala).
+          </div>
+        </div>
+      </section>
+
+      <!-- ROZDZIAŁ 10: SŁABA RÓWNOWAGA SEKWENCYJNA -->
+      <section id="rozdzial-10" class="saas-card p-4 sm:p-8 space-y-6">
+        <div class="flex items-center gap-2">
+          <span class="badge-tag bg-blue-50 text-blue-700 border border-blue-200">Część IV &bull; Rozdział 10</span>
+          <span class="text-xs font-mono text-slate-400">Weak Sequential Equilibrium</span>
+        </div>
+        <h3 class="text-lg sm:text-xl font-bold text-slate-900">Słaba Równowaga Sekwencyjna (WSE) i Granice Uszczegółowień</h3>
+
+        <div class="space-y-3 text-xs sm:text-sm text-slate-700 leading-relaxed">
+          <p>
+            Aby wyeliminować patologie SPE, definiuje się <strong>ocenę</strong> $(\sigma, \mu)$, gdzie $\sigma$ to strategie behawioralne, a $\mu$ to system przekonań na węzłach zbiorów informacyjnych.
+            <strong>Słaba równowaga sekwencyjna (WSE)</strong> wymaga:
+          </p>
+          <ol class="list-decimal list-inside text-xs space-y-1 pl-2">
+            <li><strong>Racjonalności sekwencyjnej:</strong> W każdym zbiorze informacyjnym wybór gracza jest optymalny względem jego przekonań $\mu$ i przyszłych strategii.</li>
+            <li><strong>Aktualizacji bayesowskiej w zbiorach osiąganych:</strong> $\mu(x) = \frac{\mathbb{P}_{root,\sigma}(x)}{\mathbb{P}_{root,\sigma}(H)}$ dla $\mathbb{P}(H) > 0$.</li>
+          </ol>
+          <div class="p-3 bg-amber-50 border border-amber-200 rounded-xl text-xs text-amber-950">
+            <strong>Twierdzenie 10.1 & Paradoks WSE:</strong> Każde WSE indukuje równowagę Nasha. Jednak WSE <em>nie uszczegóławia SPE</em>!
+            Ponieważ w nieosiąganych podgrach przekonania mogą być dowolne, gracz w nieosiąganej podgrze może wybrać strategię niebędącą równowagą Nasha owej podgry.
+          </div>
+        </div>
+      </section>
+
+      <!-- ROZDZIAŁ 11: RÓWNOWAGA SEKWENCYJNA KREPSA-WILSONA -->
+      <section id="rozdzial-11" class="saas-card p-4 sm:p-8 space-y-6">
+        <div class="flex items-center gap-2">
+          <span class="badge-tag bg-blue-50 text-blue-700 border border-blue-200">Część IV &bull; Rozdział 11</span>
+          <span class="text-xs font-mono text-slate-400">Sequential Equilibrium</span>
+        </div>
+        <h3 class="text-lg sm:text-xl font-bold text-slate-900">Równowaga Sekwencyjna Krepsa-Wilsona (1982)</h3>
+
+        <div class="space-y-3 text-xs sm:text-sm text-slate-700 leading-relaxed">
+          <p>
+            David Kreps i Robert Wilson (1982) zaproponowali rozwiązanie problemu dowolności przekonań poza ścieżką gry poprzez warunek <strong>spójności (KW-consistency)</strong>:
+            Ocena $(\sigma, \mu)$ jest spójna, jeśli istnieje ciąg strategii całkowicie mieszanych $\sigma_n \to \sigma$ taki, że wyznaczone jednoznacznie z reguły Bayesa przekonania $\mu_n$ zbiegają do $\mu$:
+            $$\lim_{n \to \infty} \sigma_n = \sigma, \quad \lim_{n \to \infty} \mu_n = \mu$$
+          </p>
+          <div class="p-4 bg-emerald-50 border border-emerald-200 rounded-xl text-xs text-emerald-950 font-medium">
+            <strong>Twierdzenie 11.1 (Kreps & Wilson, 1982):</strong> Każda równowaga sekwencyjna jest równowagą doskonałą w podgrach (SPE) oraz słabą równowagą sekwencyjną (WSE).
+            Zachodzi ścisła hierarchia:
+            $$\text{Równowaga Sekwencyjna} \subset (\text{SPE} \cap \text{WSE}) \subset \text{Równowaga Nasha}$$
+          </div>
+          <p class="text-xs text-slate-600">
+            Krytyka pojęcia: Kreps, Wilson, Osborne i Rubinstein wskazywali, że wymóg zbieżności ciągów zaburzonych jest sztuczną, czysto techniczną konstrukcją topologiczną bez przejrzystej interpretacji poznawczej.
+          </p>
+        </div>
+      </section>
+
+      <!-- ROZDZIAŁ 12: DOSKONAŁA RÓWNOWAGA BAYESOWSKA I ZAMKNIĘCIE LUKI -->
+      <section id="rozdzial-12" class="saas-card p-4 sm:p-8 space-y-6">
+        <div class="flex items-center gap-2">
+          <span class="badge-tag bg-blue-50 text-blue-700 border border-blue-200">Część IV &bull; Rozdział 12</span>
+          <span class="text-xs font-mono text-slate-400">Perfect Bayesian Equilibrium</span>
+        </div>
+        <h3 class="text-lg sm:text-xl font-bold text-slate-900">Doskonała Równowaga Bayesowska i Przełom Bonanno (2015)</h3>
+
+        <div class="space-y-3 text-xs sm:text-sm text-slate-700 leading-relaxed">
+          <p>
+            Giacomo Bonanno dokonuje genialnej rekonstrukcji pojęcia równowagi w grach dynamicznych, opierając je na <strong>podejściu historycznym</strong> (historiach akcji $h \in H$) oraz <strong>porządkach wiarygodności teorii AGM</strong>.
+          </p>
+          <div class="p-4 bg-blue-50 border border-blue-200 rounded-xl text-xs text-blue-950 space-y-2">
+            <strong class="text-sm font-bold block text-blue-900">Twierdzenie 12.5 (Giacomo Bonanno, 2015): Zamknięcie Luki Teoretycznej</strong>
+            <p>
+              Ocena $(\sigma, \mu)$ w skończonej grze ekstensywnej jest <strong>Równowagą Sekwencyjną Krepsa-Wilsona</strong> wtedy i tylko wtedy, gdy:
+            </p>
+            <ol class="list-decimal list-inside space-y-1 pl-2">
+              <li>Jest <em>Doskonałą Równowagą Bayesowską (PBE)</em> racjonalizowaną przez porządek wiarygodności $\precsim$,</li>
+              <li>Porządek $\precsim$ spełnia warunek <strong>mierzalności wyborów (Choice Measurability - CM)</strong>: odległości wiarygodności między historiami są zachowywane przy dodaniu tej samej akcji, oraz</li>
+              <li>Ocena jest <strong>jednorodnie bayesowska (Uniformly Bayesian)</strong> względem $\precsim$.</li>
+            </ol>
+            <p class="font-bold pt-1 text-emerald-800">
+              Wynik ten całkowicie eliminuje konieczność konstruowania nieskończonych ciągów zaburzonych strategii i granic topologicznych, zastępując je czystą algebrą rewizji przekonań!
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- ROZDZIAŁ 13, 14, 15: INFORMACJA NIEPEŁNA -->
+      <section id="rozdzial-13" class="saas-card p-4 sm:p-8 space-y-6">
+        <div class="flex items-center gap-2">
+          <span class="badge-tag bg-blue-50 text-blue-700 border border-blue-200">Część V &bull; Rozdziały 13-15</span>
+          <span class="text-xs font-mono text-slate-400">Incomplete Information & Type Spaces</span>
+        </div>
+        <h3 class="text-lg sm:text-xl font-bold text-slate-900">Gry o Niepełnej Informacji, Reputacja i Przestrzenie Typów</h3>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-xs">
+          <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl space-y-2">
+            <span class="font-mono font-bold text-blue-600 block uppercase">Rozdział 13 &bull; Statyka</span>
+            <h5 class="text-sm font-bold text-slate-900">Transformacja Harsanyiego</h5>
+            <p class="text-slate-600 leading-relaxed">
+              Niepełna informacja (nieznajomość funkcji wypłat rywali) zostaje sprowadzona do gry o niedoskonałej informacji z początkowym ruchem Natury.
+              Równowagi dzielimy na <strong>zlewające (pooling)</strong>, gdzie różne typy podejmują tę samą akcję, oraz <strong>rozdzielające (separating)</strong>, gdzie akcja ujawnia typ.
+            </p>
+          </div>
+
+          <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl space-y-2">
+            <span class="font-mono font-bold text-blue-600 block uppercase">Rozdział 14 &bull; Dynamika</span>
+            <h5 class="text-sm font-bold text-slate-900">Reputacja i Sygnalizacja</h5>
+            <p class="text-slate-600 leading-relaxed">
+              Wprowadzenie choćby minimalnego prawdopodobieństwa $p$ istnienia typu nieracjonalnego (np. furiata w grze Seltena) przełamuje paradoks sieci sklepów!
+              Monopoliście opłaca się walczyć w mieście 1, by imitować furiata i odstraszyć pretendenta 2.
+              Model wyjaśnia też nieefektywne strajki jako kosztowną sygnalizację oraz prawo o uczciwej reklamie Milgroma-Robertsa (1986).
+            </p>
+          </div>
+
+          <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl space-y-2">
+            <span class="font-mono font-bold text-blue-600 block uppercase">Rozdział 15 &bull; Fundamenty</span>
+            <h5 class="text-sm font-bold text-slate-900">Typy vs Stany Kripkego</h5>
+            <p class="text-slate-600 leading-relaxed">
+              Bonanno udowadnia ścisłą równoważność między podejściem przestrzeni typów Harsanyiego $T_i$ a epistemicznymi strukturami stanów Kripkego $\Omega$.
+              Podręcznik podaje precyzyjny algorytm dwukierunkowej konwersji, również w przypadku ogólnym z wartościami współzależnymi (Interdependent values).
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- INTERAKTYWNE LABORATORIA (MODUŁ 16) -->
+      <section id="lab-sekcja" class="saas-card p-4 sm:p-8 space-y-8 bg-white border-2 border-blue-500/30">
+        <div class="flex items-center justify-between flex-wrap gap-2">
+          <div class="flex flex-wrap items-center gap-2">
+            <span class="badge-tag bg-blue-600 text-white">Moduł 16</span>
+            <h3 class="text-lg sm:text-xl font-black text-slate-900">Interaktywne Laboratorium Algorytmów Bonanno (60 FPS)</h3>
+          </div>
+          <span class="text-xs font-mono text-slate-500">4 Zintegrowane Silniki Matematyczne</span>
+        </div>
+
+        <!-- LAB 1: SOLVER MACIERZY NASHA -->
+        <div class="p-4 sm:p-5 bg-slate-50 border border-slate-200 rounded-xl space-y-4 min-w-0 max-w-full">
+          <div class="flex items-center justify-between flex-wrap gap-2">
+            <h4 class="text-sm font-bold text-slate-900 flex flex-wrap items-center gap-2">
+              <span class="w-2 h-2 rounded-full bg-blue-600"></span>
+              Laboratorium 1: Solver Macierzy Wypłat $2 \times 2$ (Równowagi Czyste i Mieszane)
+            </h4>
+            <div class="flex items-center gap-2">
+              <label for="matrixPresetSelect" class="text-xs font-semibold text-slate-600">Szablon:</label>
+              <select id="matrixPresetSelect" class="text-xs px-2.5 py-1.5 border border-slate-300 rounded-lg bg-white font-mono">
+                <option value="prisoners">Dylemat Więźnia (Prisoner's Dilemma)</option>
+                <option value="battle">Bitwa Płci (Battle of the Sexes)</option>
+                <option value="pennies">Dopasowywanie Monet (Matching Pennies)</option>
+                <option value="stag">Polowanie na Jelenia (Stag Hunt)</option>
+                <option value="cournot">Dyskretny Duopol Cournota</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- UX COACHMARK (Inwariant 1) -->
+          <div class="p-3 sm:p-4 bg-blue-50/70 border border-blue-200/80 rounded-xl flex items-start gap-3">
+            <span class="text-blue-600 text-lg">👉</span>
+            <div class="text-xs text-blue-900 leading-relaxed">
+              <strong>Jak z tego korzystać:</strong> 
+              1. Wybierz szablon gry lub wprowadź własne wypłaty $(u_1, u_2)$ w polach formularza. 
+              2. Obserwuj podkreślenia najlepszych odpowiedzi w tabeli (niebieskie dla Gracza 1, zielone dla Gracza 2). 
+              3. Komórka z podwójnym podkreśleniem i zieloną ramką oznacza równowagę w strategiach czystych. Poniżej automatycznie przeliczana jest równowaga w strategiach mieszanych $(p^*, q^*)$ z dowodu Twierdzenia 5.2!
+            </div>
+          </div>
+
+          <p id="matrixPresetDesc" class="text-xs text-slate-600 italic"></p>
+
+          <!-- Input Controls Grid -->
+          <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 sm:gap-3 text-xs font-mono">
+            <div>
+              <label class="block text-slate-500 mb-1">Etykieta W1:</label>
+              <input type="text" id="labelRow1" value="Współpraca" class="w-full px-2 py-1 border rounded bg-white">
+            </div>
+            <div>
+              <label class="block text-slate-500 mb-1">Etykieta W2:</label>
+              <input type="text" id="labelRow2" value="Zdrada" class="w-full px-2 py-1 border rounded bg-white">
+            </div>
+            <div>
+              <label class="block text-slate-500 mb-1">Etykieta K1:</label>
+              <input type="text" id="labelCol1" value="Współpraca" class="w-full px-2 py-1 border rounded bg-white">
+            </div>
+            <div>
+              <label class="block text-slate-500 mb-1">Etykieta K2:</label>
+              <input type="text" id="labelCol2" value="Zdrada" class="w-full px-2 py-1 border rounded bg-white">
+            </div>
+          </div>
+
+          <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 sm:gap-3 text-xs font-mono">
+            <div class="p-2 bg-white rounded border">
+              <span class="text-[10px] text-slate-400 block mb-1">(W1, K1)</span>
+              <div class="flex gap-1">
+                <input type="number" id="cellTL1" value="3" class="w-10 sm:w-12 px-1 py-0.5 border rounded">
+                <input type="number" id="cellTL2" value="3" class="w-10 sm:w-12 px-1 py-0.5 border rounded">
+              </div>
+            </div>
+            <div class="p-2 bg-white rounded border">
+              <span class="text-[10px] text-slate-400 block mb-1">(W1, K2)</span>
+              <div class="flex gap-1">
+                <input type="number" id="cellTR1" value="0" class="w-10 sm:w-12 px-1 py-0.5 border rounded">
+                <input type="number" id="cellTR2" value="5" class="w-10 sm:w-12 px-1 py-0.5 border rounded">
+              </div>
+            </div>
+            <div class="p-2 bg-white rounded border">
+              <span class="text-[10px] text-slate-400 block mb-1">(W2, K1)</span>
+              <div class="flex gap-1">
+                <input type="number" id="cellBL1" value="5" class="w-10 sm:w-12 px-1 py-0.5 border rounded">
+                <input type="number" id="cellBL2" value="0" class="w-10 sm:w-12 px-1 py-0.5 border rounded">
+              </div>
+            </div>
+            <div class="p-2 bg-white rounded border">
+              <span class="text-[10px] text-slate-400 block mb-1">(W2, K2)</span>
+              <div class="flex gap-1">
+                <input type="number" id="cellBR1" value="1" class="w-10 sm:w-12 px-1 py-0.5 border rounded">
+                <input type="number" id="cellBR2" value="1" class="w-10 sm:w-12 px-1 py-0.5 border rounded">
+              </div>
+            </div>
+          </div>
+
+          <!-- Dynamic Visual Payoff Table -->
+          <div class="overflow-x-auto min-w-0 max-w-full">
+            <table class="w-full text-center border-collapse text-xs font-mono bg-white rounded-xl shadow-sm overflow-hidden">
+              <thead>
+                <tr class="bg-slate-100 text-slate-700">
+                  <th class="p-2.5 border border-slate-200">Gracz 1 \ Gracz 2</th>
+                  <th class="p-2.5 border border-slate-200" id="dispCol1Name">K1</th>
+                  <th class="p-2.5 border border-slate-200" id="dispCol2Name">K2</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <th class="p-2.5 bg-slate-100 border border-slate-200 font-bold" id="dispRow1Name">W1</th>
+                  <td class="p-3 border border-slate-200 matrix-cell" id="tdTL">(3, 3)</td>
+                  <td class="p-3 border border-slate-200 matrix-cell" id="tdTR">(0, 5)</td>
+                </tr>
+                <tr>
+                  <th class="p-2.5 bg-slate-100 border border-slate-200 font-bold" id="dispRow2Name">W2</th>
+                  <td class="p-3 border border-slate-200 matrix-cell" id="tdBL">(5, 0)</td>
+                  <td class="p-3 border border-slate-200 matrix-cell" id="tdBR">(1, 1)</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <!-- Results Panel -->
+          <div id="matrixResultsPanel" class="p-3 sm:p-4 bg-white border border-slate-200 rounded-xl overflow-x-auto"></div>
+        </div>
+
+        <!-- LAB 2: EXTENSIVE TREE & INDUKCJA WSTECZNA -->
+        <div class="p-4 sm:p-5 bg-slate-50 border border-slate-200 rounded-xl space-y-4 min-w-0 max-w-full" id="treeCanvasContainer">
+          <h4 class="text-sm font-bold text-slate-900 flex flex-wrap items-center gap-2">
+            <span class="w-2 h-2 rounded-full bg-emerald-600"></span>
+            Laboratorium 2: Eksplorator Drzewa Ekstensywnego i Indukcja Wsteczna (Amy i Beth 100k USD)
+          </h4>
+
+          <!-- UX COACHMARK -->
+          <div class="p-3 sm:p-4 bg-blue-50/70 border border-blue-200/80 rounded-xl flex items-start gap-3">
+            <span class="text-blue-600 text-lg">👉</span>
+            <div class="text-xs text-blue-900 leading-relaxed">
+              <strong>Jak z tego korzystać:</strong> 
+              1. Przesuwaj suwak wrażliwości Beth na niesprawiedliwość ($F_{\text{Beth}}$). 
+              2. Obserwuj zmianę grubych krawędzi reprezentujących ścieżkę indukcji wstecznej. 
+              3. Zwróć uwagę, że gdy kara za niesprawiedliwość przekroczy 10k USD, Beth odrzuca ofertę 70-30, zmuszając racjonalną Amy do zaoferowania sprawiedliwego podziału 50-50!
+            </div>
+          </div>
+
+          <div class="flex flex-wrap items-center gap-3 bg-white p-3 rounded-xl border border-slate-200">
+            <label class="text-xs font-semibold text-slate-700">Dysużyteczność Beth z niesprawiedliwości:</label>
+            <input type="range" id="treeBethFairness" min="0" max="25" value="10" class="flex-1 min-w-[140px]">
+            <span id="treeValFairness" class="font-mono text-xs font-bold text-blue-600">10k USD</span>
+          </div>
+
+          <!-- SVG Tree Render -->
+          <div class="bg-white p-3 sm:p-4 rounded-xl border border-slate-200 flex justify-center overflow-x-auto min-w-0 max-w-full">
+            <svg id="treeSvg" viewBox="0 0 560 240" class="w-full max-w-[560px] h-60"></svg>
+          </div>
+
+          <div id="treeOutcomeReport" class="p-3 sm:p-4 bg-white border border-slate-200 rounded-xl overflow-x-auto"></div>
+        </div>
+
+        <!-- LAB 3 & 4: BAYES ORAZ AUMANN -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <!-- LAB 3: MONTY HALL BAYES -->
+          <div class="p-4 sm:p-5 bg-slate-50 border border-slate-200 rounded-xl space-y-4 min-w-0 max-w-full">
+            <h4 class="text-sm font-bold text-slate-900 flex flex-wrap items-center gap-2">
+              <span class="w-2 h-2 rounded-full bg-amber-600"></span>
+              Laboratorium 3: Paradoks Monty Halla i Aktualizacja Bayesa
+            </h4>
+            <div class="p-3 bg-blue-50/70 border border-blue-200/80 rounded-lg text-xs text-blue-900">
+              <strong>Zadanie 8.12 Bonanno:</strong> Wybierasz Drzwi 1. Prowadzący otwiera Drzwi 3 (gdzie nie ma samochodu). Czy warto zmienić wybór na Drzwi 2?
+            </div>
+
+            <div class="flex items-center justify-between bg-white p-3 rounded-lg border">
+              <div>
+                <span class="text-[11px] text-slate-500 block">Wskaźnik (Pozostanie):</span>
+                <span id="bayesStayWinRate" class="text-base font-mono font-bold text-slate-700">33.3%</span>
+              </div>
+              <div class="text-right">
+                <span class="text-[11px] text-slate-500 block">Wskaźnik (Zmiana):</span>
+                <span id="bayesSwitchWinRate" class="text-base font-mono font-bold text-emerald-600">66.7%</span>
+              </div>
+            </div>
+
+            <div class="flex items-center gap-2">
+              <button id="bayesRunSimBtn" class="flex-1 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg text-xs font-semibold shadow-sm transition">
+                Symuluj 500 Gier Monte Carlo
+              </button>
+              <button id="bayesResetBtn" class="px-3 py-2 bg-slate-200 hover:bg-slate-300 text-slate-700 rounded-lg text-xs font-semibold transition">
+                Reset
+              </button>
+            </div>
+            <div class="text-[11px] text-slate-500 font-mono text-center">
+              Liczba przeprowadzonych prób: <span id="bayesTrialsCount" class="font-bold">0</span>
+            </div>
+          </div>
+
+          <!-- LAB 4: AUMANN GRAPH -->
+          <div class="p-4 sm:p-5 bg-slate-50 border border-slate-200 rounded-xl space-y-4 min-w-0 max-w-full">
+            <h4 class="text-sm font-bold text-slate-900 flex flex-wrap items-center gap-2">
+              <span class="w-2 h-2 rounded-full bg-purple-600"></span>
+              Laboratorium 4: Graf Wspólnej Wiedzy Aumanna (Rozdział 7)
+            </h4>
+            <div class="p-3 bg-purple-50/70 border border-purple-200/80 rounded-lg text-xs text-purple-950">
+              Przestrzeń stanów $W = \{a, b, c, d, e\}$. Partycje: $\mathcal{I}_1 = \{\{a,b,c\}, \{d,e\}\}$, $\mathcal{I}_2 = \{\{a,b\}, \{c,d\}, \{e\}\}$.
+            </div>
+
+            <div class="flex items-center gap-3 bg-white p-3 rounded-lg border">
+              <label for="aumannStateSelect" class="text-xs font-semibold text-slate-700">Stan świata $w$:</label>
+              <select id="aumannStateSelect" class="text-xs px-2.5 py-1.5 border rounded-lg bg-white font-mono">
+                <option value="a">Stan a</option>
+                <option value="b">Stan b</option>
+                <option value="c">Stan c</option>
+                <option value="d">Stan d</option>
+                <option value="e">Stan e</option>
+              </select>
+            </div>
+
+            <div id="aumannResultPanel" class="p-3 bg-white border border-slate-200 rounded-lg overflow-x-auto"></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- DIAGNOSTYCZNY QUIZ (MODUŁ 17) -->
+      <section id="quiz-sekcja" class="saas-card p-4 sm:p-8 space-y-6">
+        <div class="flex items-center justify-between flex-wrap gap-2">
+          <div class="flex flex-wrap items-center gap-2">
+            <span class="badge-tag bg-emerald-600 text-white">Moduł 17</span>
+            <h3 class="text-lg sm:text-xl font-bold text-slate-900">Diagnostyczny Sprawdzian Zrozumienia (6 Zadań Rygoru Bonanno)</h3>
+          </div>
+          <div class="flex items-center gap-2">
+            <span class="text-xs text-slate-500 font-mono">Twój wynik:</span>
+            <span id="quizScoreTracker" class="text-sm font-mono font-bold text-emerald-600 px-2.5 py-0.5 bg-emerald-50 border border-emerald-200 rounded-lg">
+              0 / 6
+            </span>
+          </div>
+        </div>
+
+        <p class="text-xs text-slate-600 leading-relaxed">
+          Poniższe pytania testują zrozumienie najgłębszych koncepcji teoretycznych z podręcznika Giacomo Bonanno:
+          od założeń mechanizmu aukcji Vickreya, przez epistemologię wspólnej wiedzy, aż po uszczegółowienia sekwencyjne i twierdzenie Bonanno (2015).
+        </p>
+
+        <!-- Dynamic Questions Container -->
+        <div class="space-y-4" id="quizQuestionsContainer"></div>
+      </section>
+
+      <!-- PRAKTYCZNA IMPLEMENTACJA W PYTHONIE (MODUŁ 18) -->
+      <section id="kod-sekcja" class="saas-card p-4 sm:p-8 space-y-4">
+        <div class="flex items-center justify-between flex-wrap gap-2">
+          <div class="flex flex-wrap items-center gap-2">
+            <span class="badge-tag bg-slate-800 text-white font-mono">Moduł 18</span>
+            <h3 class="text-lg sm:text-xl font-bold text-slate-900">Implementacja Algorytmów w Pythonie (GameTheoryCore)</h3>
+          </div>
+          <button id="copyCodeBtn" class="px-3 py-1.5 bg-slate-800 hover:bg-slate-900 text-slate-200 text-xs font-mono rounded-lg transition shadow-sm">
+            Kopiuj Kod
+          </button>
+        </div>
+
+        <p class="text-xs text-slate-600">
+          Poniższy skrypt implementuje kluczowe procedury z podręcznika Bonanno: obliczanie równowag czystych i mieszanych dla gier $2 \times 2$ oraz eliminację zdominowanych strategii w czystym Pythonie bez zewnętrznych zależności.
+        </p>
+
+        <pre class="bg-slate-950 text-slate-100 p-3 sm:p-4 rounded-xl text-xs font-mono overflow-x-auto leading-relaxed border border-slate-800" id="pythonCodeBlock"><code># GameTheoryCore - Bonanno Solvers in Python
+from typing import Dict, List, Tuple, Optional
+
+class MatrixGame2x2:
+    """
+    2-player 2x2 game solver with Best Reply analysis,
+    pure Nash equilibria and mixed Nash equilibria.
+    Payoffs:
+      R1: (tl1, tl2) vs (tr1, tr2)
+      R2: (bl1, bl2) vs (br1, br2)
+    """
+    def __init__(self, tl: Tuple[float, float], tr: Tuple[float, float],
+                 bl: Tuple[float, float], br: Tuple[float, float]):
+        self.tl1, self.tl2 = tl
+        self.tr1, self.tr2 = tr
+        self.bl1, self.bl2 = bl
+        self.br1, self.br2 = br
+
+    def pure_nash_equilibria(self) -> List[str]:
+        equilibria = []
+        # P1 best replies in columns
+        p1_c1 = [self.tl1 >= self.bl1, self.bl1 >= self.tl1] # [TL, BL]
+        p1_c2 = [self.tr1 >= self.br1, self.br1 >= self.tr1] # [TR, BR]
+
+        # P2 best replies in rows
+        p2_r1 = [self.tl2 >= self.tr2, self.tr2 >= self.tl2] # [TL, TR]
+        p2_r2 = [self.bl2 >= self.br2, self.br2 >= self.bl2] # [BL, BR]
+
+        if p1_c1[0] and p2_r1[0]: equilibria.append("(R1, C1)")
+        if p1_c2[0] and p2_r1[1]: equilibria.append("(R1, C2)")
+        if p1_c1[1] and p2_r2[0]: equilibria.append("(R2, C1)")
+        if p1_c2[1] and p2_r2[1]: equilibria.append("(R2, C2)")
+        return equilibria
+
+    def mixed_nash_equilibrium(self) -> Optional[Dict[str, float]]:
+        # P2 indifference for P1 mixed strategy p:
+        # p*tl2 + (1-p)*bl2 = p*tr2 + (1-p)*br2
+        denom_p = (self.tl2 - self.tr2) - (self.bl2 - self.br2)
+        num_p = self.br2 - self.bl2
+        
+        # P1 indifference for P2 mixed strategy q:
+        # q*tl1 + (1-q)*tr1 = q*bl1 + (1-q)*br1
+        denom_q = (self.tl1 - self.bl1) - (self.tr1 - self.br1)
+        num_q = self.br1 - self.tr1
+
+        if denom_p == 0 or denom_q == 0:
+            return None
+        
+        p = num_p / denom_p
+        q = num_q / denom_q
+
+        if 0 < p < 1 and 0 < q < 1:
+            eu1 = self.tl1 * q + self.tr1 * (1 - q)
+            eu2 = self.tl2 * p + self.bl2 * (1 - p)
+            return {"p_star": p, "q_star": q, "EU1": eu1, "EU2": eu2}
+        return None
+
+if __name__ == "__main__":
+    # Test on Matching Pennies
+    mp = MatrixGame2x2((1, -1), (-1, 1), (-1, 1), (1, -1))
+    print("Matching Pennies Pure Nash:", mp.pure_nash_equilibria()) # []
+    print("Matching Pennies Mixed Nash:", mp.mixed_nash_equilibrium()) # p=0.5, q=0.5
+</code></pre>
+      </section>
+
+      <!-- MODUŁ 19: ŹRÓDŁA PIERWOTNE & BIBLIOGRAFIA NAUKOWA -->
+      <section id="bibliografia-sekcja" class="saas-card p-4 sm:p-8 space-y-4">
+        <div class="flex items-center gap-2">
+          <span class="badge-tag bg-blue-50 text-blue-700 border border-blue-200">Moduł 19</span>
+          <h3 class="text-lg sm:text-xl font-bold text-slate-900">📚 Źródła Pierwotne & Bibliografia Naukowa</h3>
+        </div>
+        
+        <p class="text-xs text-slate-600">
+          Poniższy zbiór zawiera kanoniczne publikacje założycielskie z bezpośrednimi odnośnikami DOI, stanowiące fundament współczesnej teorii gier oraz podręcznika Giacomo Bonanno:
+        </p>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-3 text-xs pt-2">
+          <div class="p-3 bg-slate-50 border border-slate-200 rounded-xl space-y-1">
+            <span class="font-bold text-slate-900 block">Bonanno, Giacomo (2015)</span>
+            <div class="text-slate-600 text-[11px]"><em>AGM-consistency and perfect Bayesian equilibrium. Part II: from PBE to sequential equilibrium</em>. International Journal of Game Theory, 44(4), 841-863.</div>
+            <a href="https://doi.org/10.1007/s00182-014-0453-y" target="_blank" rel="noopener noreferrer" class="text-blue-600 font-mono text-[11px] hover:underline block pt-1">DOI: 10.1007/s00182-014-0453-y</a>
+          </div>
+
+          <div class="p-3 bg-slate-50 border border-slate-200 rounded-xl space-y-1">
+            <span class="font-bold text-slate-900 block">Bonanno, Giacomo (2013)</span>
+            <div class="text-slate-600 text-[11px]"><em>AGM-consistency and perfect Bayesian equilibrium. Part I: definition and properties</em>. International Journal of Game Theory, 42(3), 567-592.</div>
+            <a href="https://doi.org/10.1007/s00182-012-0346-6" target="_blank" rel="noopener noreferrer" class="text-blue-600 font-mono text-[11px] hover:underline block pt-1">DOI: 10.1007/s00182-012-0346-6</a>
+          </div>
+
+          <div class="p-3 bg-slate-50 border border-slate-200 rounded-xl space-y-1">
+            <span class="font-bold text-slate-900 block">Aumann, Robert J. (1976)</span>
+            <div class="text-slate-600 text-[11px]"><em>Agreeing to Disagree</em>. The Annals of Statistics, 4(6), 1236-1239.</div>
+            <a href="https://doi.org/10.1214/aos/1176343654" target="_blank" rel="noopener noreferrer" class="text-blue-600 font-mono text-[11px] hover:underline block pt-1">DOI: 10.1214/aos/1176343654</a>
+          </div>
+
+          <div class="p-3 bg-slate-50 border border-slate-200 rounded-xl space-y-1">
+            <span class="font-bold text-slate-900 block">Kreps, David M., Wilson, Robert (1982)</span>
+            <div class="text-slate-600 text-[11px]"><em>Sequential Equilibria</em>. Econometrica, 50(4), 863-894.</div>
+            <a href="https://doi.org/10.2307/1912767" target="_blank" rel="noopener noreferrer" class="text-blue-600 font-mono text-[11px] hover:underline block pt-1">DOI: 10.2307/1912767</a>
+          </div>
+
+          <div class="p-3 bg-slate-50 border border-slate-200 rounded-xl space-y-1">
+            <span class="font-bold text-slate-900 block">Harsanyi, John C. (1967-1968)</span>
+            <div class="text-slate-600 text-[11px]"><em>Games with Incomplete Information Played by 'Bayesian' Players, Parts I-III</em>. Management Science, 14(3, 5, 7).</div>
+            <a href="https://doi.org/10.1287/mnsc.14.3.159" target="_blank" rel="noopener noreferrer" class="text-blue-600 font-mono text-[11px] hover:underline block pt-1">DOI: 10.1287/mnsc.14.3.159</a>
+          </div>
+
+          <div class="p-3 bg-slate-50 border border-slate-200 rounded-xl space-y-1">
+            <span class="font-bold text-slate-900 block">Nash, John (1951)</span>
+            <div class="text-slate-600 text-[11px]"><em>Non-Cooperative Games</em>. Annals of Mathematics, 54(2), 286-295.</div>
+            <a href="https://doi.org/10.2307/1969529" target="_blank" rel="noopener noreferrer" class="text-blue-600 font-mono text-[11px] hover:underline block pt-1">DOI: 10.2307/1969529</a>
+          </div>
+
+          <div class="p-3 bg-slate-50 border border-slate-200 rounded-xl space-y-1">
+            <span class="font-bold text-slate-900 block">Selten, Reinhard (1975)</span>
+            <div class="text-slate-600 text-[11px]"><em>Reexamination of the perfectness concept for equilibrium points in extensive games</em>. International Journal of Game Theory, 4(1), 25-55.</div>
+            <a href="https://doi.org/10.1007/BF01766006" target="_blank" rel="noopener noreferrer" class="text-blue-600 font-mono text-[11px] hover:underline block pt-1">DOI: 10.1007/BF01766006</a>
+          </div>
+
+          <div class="p-3 bg-slate-50 border border-slate-200 rounded-xl space-y-1">
+            <span class="font-bold text-slate-900 block">Vickrey, William (1961)</span>
+            <div class="text-slate-600 text-[11px]"><em>Counterspeculation, Auctions, and Competitive Sealed Tenders</em>. The Journal of Finance, 16(1), 8-37.</div>
+            <a href="https://doi.org/10.1111/j.1540-6261.1961.tb02789.x" target="_blank" rel="noopener noreferrer" class="text-blue-600 font-mono text-[11px] hover:underline block pt-1">DOI: 10.1111/j.1540-6261.1961.tb02789.x</a>
+          </div>
+        </div>
+      </section>
+
+      <!-- FOOTER -->
+      <footer class="border-t border-slate-200 pt-6 text-center text-xs text-slate-500 font-mono space-y-1 pb-12">
+        <div>Lyceum Series &bull; Interaktywne Kompendium Teorii Gier (Giacomo Bonanno, 2015)</div>
+        <div>Opracowane w standardzie SaaS / EdTech &bull; Wszelkie prawa zastrzeżone</div>
+      </footer>
+
+    </main>
+  </div>
+
+  <!-- Application Logic -->
+  <script src="app.js"></script>
+</body>
+</html>
